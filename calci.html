@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #calculator {
+            width: 300px;
+            margin-top: 50px;
+        }
+
+        .calculator-screen {
+            text-align: right;
+            padding: 10px;
+            font-size: 24px;
+            height: 60px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+        }
+
+        .calculator-key {
+            width: 25%;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #dee2e6;
+            transition: background-color 0.3s;
+        }
+
+        .calculator-key:hover {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">Calculator</h1>
+
+    <p id="description">I have created a digital calculator which performs basic mathematical operations.</p>
+
+<div id="calculator" class="card">
+    <div id="screen" class="calculator-screen"></div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3 calculator-key" onclick="clearScreen()">C</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('%')">%</div>
+            <div class="col-3 calculator-key" onclick="performOperation('/')">/</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('*')">*</div>
+        </div>
+        <div class="row">
+            <div class="col-3 calculator-key" onclick="appendCharacter('7')">7</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('8')">8</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('9')">9</div>
+            <div class="col-3 calculator-key" onclick="performOperation('-')">-</div>
+        </div>
+        <div class="row">
+            <div class="col-3 calculator-key" onclick="appendCharacter('4')">4</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('5')">5</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('6')">6</div>
+            <div class="col-3 calculator-key" onclick="performOperation('+')">+</div>
+        </div>
+        <div class="row">
+            <div class="col-3 calculator-key" onclick="appendCharacter('1')">1</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('2')">2</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('3')">3</div>
+            <div class="col-3 calculator-key" onclick="calculateResult()">=</div>
+        </div>
+        <div class="row">
+            <div class="col-6 calculator-key" onclick="appendCharacter('0')">0</div>
+            <div class="col-3 calculator-key" onclick="appendCharacter('.')">.</div>
+           
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("keydown", function (event) {
+        const key = event.key;
+        if (/^\d$/.test(key)) {
+            appendCharacter(key);
+        } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+            performOperation(key);
+        } else if (key === "%" || key === ".") {
+            appendCharacter(key);
+        } else if (key === "Enter") {
+            calculateResult();
+        } else {
+            alert("Only numbers are allowed.");
+        }
+    });
+
+    function clearScreen() {
+        document.getElementById("screen").innerText = "";
+    }
+
+    function appendCharacter(character) {
+        document.getElementById("screen").innerText += character;
+    }
+
+    function performOperation(operator) {
+        const screenText = document.getElementById("screen").innerText;
+        if (screenText.trim() !== "") {
+            appendCharacter(operator);
+        }
+    }
+
+    function calculateResult() {
+        const screenText = document.getElementById("screen").innerText;
+        if (screenText.trim() !== "") {
+            try {
+                const result = eval(screenText);
+                document.getElementById("screen").innerText = result;
+            } catch (error) {
+                alert("Invalid expression");
+            }
+        }
+    }
+</script>
+<script src="https://app.zenclass.in/sheets/v1/js/zen/suite/bundle.js"></script>
+</body>
+</html>
